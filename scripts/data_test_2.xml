@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<irs>
+    <testCase>
+        <testName>LoginTest</testName>
+        <description>Test case for user login functionality</description>
+        <input>
+            <username>test_user</username>
+            <password>secure_pass</password>
+        </input>
+        <expectedOutput>
+            <status>Success</status>
+            <userInfo>
+                <userId>98765</userId>
+                <fullName>Jane Doe</fullName>
+                <role>User</role>
+            </userInfo>
+        </expectedOutput>
+    </testCase>
+
+    <testCase>
+        <testName>SearchProductTest</testName>
+        <description>Test case for searching a product in the system</description>
+        <input>
+            <searchQuery>Mobile Phone</searchQuery>
+            <searchOptions>
+                <category>Electronics</category>
+                <priceRange>
+                    <min>200</min>
+                    <max>800</max>
+                </priceRange>
+            </searchOptions>
+        </input>
+        <expectedOutput>
+            <results>
+                <product>
+                    <name>Smartphone ABC</name>
+                    <price>599</price>
+                    <availability>In Stock</availability>
+                </product>
+                <!-- More product results as needed -->
+            </results>
+        </expectedOutput>
+    </testCase>
+
+    <!-- Add more test cases as needed -->
+
+</irs>
