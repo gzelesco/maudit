@@ -129,7 +129,6 @@ def printer(diff_dic, diff_list=None):
         diff_dic (dict): Dictionary of differences.
         diff_list (list): List of differences.
     """
-    print(initial_message)
     for key in diff_dic:
         message_box(key)
         time.sleep(0.5)
@@ -177,6 +176,7 @@ def main(file1, file2):
     close = input('Press ENTER to close this window.')
 
 if __name__ == '__main__':
+    print(initial_message)
     file1, file2 = find_xml_files()
     main(file1,file2)
     exit()
