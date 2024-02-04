@@ -12,7 +12,7 @@ This script is designed to identify and display the differences between two XML 
 - Virtual environment creation
 
 ### Download Package
-You can clone this directory directly using Git or download it manually and unzip by clicking on "<>Code" -> "Download ZIP" on this page.
+You can clone this directory directly using Git or download it manually and unzip by clicking on `<>Code -> Download ZIP` on this page.
 
 ### Set up Virtual Environment and Install Required Packages
 1. Open a terminal or command prompt.
@@ -34,4 +34,4 @@ You can clone this directory directly using Git or download it manually and unzi
 3. Execute 'maudit_run.bat' to run the script
 
 ## Note
-This script assumes that the structure of both XML files is the same, and only the values within the tags are being compared.
+This script assumes that the structure of both XML files is the same, and the root tag is `<irs><\irs>`.
