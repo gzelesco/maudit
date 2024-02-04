@@ -11,6 +11,16 @@ This script is designed to identify and display the differences between two XML 
 - Donwload this package
 - Virtual environment creation
 
+### Python Installation
+1. Visit [Python Downloads](https://www.python.org/downloads/) and select the latest Python version.
+2. Download and install Python with all recommended features.
+3. Verify the correct installation by typing `python` in a terminal or command prompt. If `>>>` appears, Python is installed and ready to run.
+4. If you encounter the error `'python' is not recognized as an internal or external command, operable program, or batch file.`, Python may not be set on PATH.
+5. To set the Python PATH and ensure Pip will run, execute the following commands, replacing `<UserName>` with your Windows user:
+```
+set PATH=%PATH%;C:\Users\<UserName>\AppData\Local\Programs\Python\Python312
+set PATH=%PATH%;C:\Users\<UserName>\AppData\Local\Programs\Python\Python312\Scripts
+```
 ### Download Package
 You can clone this directory directly using Git or download it manually and unzip by clicking on `<>Code -> Download ZIP` on this page.
 
@@ -22,7 +32,7 @@ You can clone this directory directly using Git or download it manually and unzi
    python -m venv venv
 4. Run the following commands to activate a virtual environment:
    ```bash
-   venv\Scripts\activate       # For Windows
+   venv\Scripts\activate
 5. You'll notice that the prompt changes to include (venv), indicating that you are now within the Virtual Environment.
 5. While in the virtual environment, run the following command to install the required packages:
 
@@ -32,6 +42,7 @@ You can clone this directory directly using Git or download it manually and unzi
 1. Ensure your XML files (with a ".xml" extension) are located in the same directory as the script.
 2. Two XML files are required to run this program. If more or fewer files are present in the directory, an error message will be raised.
 3. Execute 'maudit_run.bat' to run the script.
+4. The differences between the two XML files will be displayed on the command screen with distinct colors for clarity.
 
 ## Note
 This script assumes that the structure of both XML files is the same, and the root tag is `<irs><\irs>`.
