@@ -1,5 +1,5 @@
 call .\venv\Scripts\activate.bat
 
-python scripts\main.py
+python main.py
 
 PAUSE

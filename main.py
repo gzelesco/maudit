@@ -1,4 +1,5 @@
 import glob
+import time  # Used only for a more pleasurable experience
 
 import xmltodict
 from deepdiff import DeepDiff
@@ -17,12 +18,24 @@ EXCLUDED_TAGS = [
     "root['irs']['action']['fo_creation_date']",
 ]
 
-initial_message = '''Differences identified between the two files:
+initial_message = '''
+WELCOME TO MAUDIT
+
+Usage
+1. Ensure your XML files (with a ".xml" extension) are located in the same directory as this program.
+2. Two XML files are required to run this program. If more or fewer files are present in the directory, an error message will be raised.
+3. The differences between the two XML files will be displayed on the command screen with distinct colors for clarity.
+4. For access to the source code, visit https://github.com/gzelesco/maudit
+
+Differences identified between the two files:
 '''
 
 
 # FUNCTIONS:
-
+def exit_error():
+    close = input('Press ENTER to close this window.')
+    exit(1)
+    
 def find_xml_files():
     """
     Find XML files in the current directory and ensure there are exactly two.
@@ -33,7 +46,7 @@ def find_xml_files():
     files = glob.glob('*.xml')
     if len(files) != 2:
         print("Error: Exactly two XML files are required.")
-        exit(1)
+        exit_error()
     file1, file2 = files
     return file1, file2
 
@@ -54,10 +67,10 @@ def read_file(file_name):
         return file_str
     except FileNotFoundError:
         print(f"Error: File '{file_name}' not found.")
-        exit(1)
+        exit_error()
     except Exception as e:
         print(f"Error reading file '{file_name}': {e}")
-        exit(1)
+        exit_error()
 
  
 def split_string_from(input_string, substring):
@@ -79,7 +92,7 @@ def split_string_from(input_string, substring):
             raise ValueError(f"{substring} not found in the input string.")
     except Exception as e:
         print(f"Error: {e}")
-        exit(1)
+        exit_error()
 
 
 def create_diff_list(diff_dic):
@@ -119,12 +132,14 @@ def printer(diff_dic, diff_list=None):
     print(initial_message)
     for key in diff_dic:
         message_box(key)
+        time.sleep(0.5)
         for tag in diff_dic[key]:
             try:
                 old_value = diff_dic[key][tag]["old_value"]
                 new_value = diff_dic[key][tag]["new_value"]
                 message = message_generator(tag,old_value,new_value)
                 print(message)
+                time.sleep(0.1)
             except Exception as e:
                 print(f'ERROR: {tag} - {e}')
         print('\n')
@@ -138,9 +153,7 @@ def printer(diff_dic, diff_list=None):
 
 
 
-def main():
-
-    file1, file2 = find_xml_files()
+def main(file1, file2):
     
     xml_string1 = read_file(file1)
     xml_string2 = read_file(file2)
@@ -153,7 +166,7 @@ def main():
     
     if python_dict1 == python_dict2:
         print("XML 1 is equal to XML 2")
-        exit(0)
+        exit_error()
     
     diff_dic = DeepDiff(python_dict1, python_dict2,
                         verbose_level=1, exclude_paths=EXCLUDED_TAGS)
@@ -161,8 +174,10 @@ def main():
     diff_list = create_diff_list(diff_dic)
     
     printer(diff_dic, diff_list)
-
+    close = input('Press ENTER to close this window.')
 
 if __name__ == '__main__':
-    main()
+    file1, file2 = find_xml_files()
+    main(file1,file2)
     exit()
+
