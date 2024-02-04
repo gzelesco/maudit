@@ -16,7 +16,7 @@ You can clone this directory directly using Git or download it manually and unzi
 
 ### Set up Virtual Environment and Install Required Packages
 1. Open a terminal or command prompt.
-2. Navigate to the "maudit" directory where you have saved this package.
+2. Navigate to the `maudit` directory where you have saved this package.
 3. Run the following commands to create a virtual environment:
    ```bash
    python -m venv venv
@@ -30,8 +30,8 @@ You can clone this directory directly using Git or download it manually and unzi
    pip install -r requirements.txt
 ## Usage
 1. Ensure your XML files (with a ".xml" extension) are located in the same directory as the script.
-2 . Two XML files are required to run this program. If more or fewer files are present in the directory, an error message will be raised.
-3. Execute 'maudit_run.bat' to run the script
+2. Two XML files are required to run this program. If more or fewer files are present in the directory, an error message will be raised.
+3. Execute 'maudit_run.bat' to run the script.
 
 ## Note
 This script assumes that the structure of both XML files is the same, and the root tag is `<irs><\irs>`.
