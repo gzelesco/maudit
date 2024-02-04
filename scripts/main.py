@@ -1,3 +1,5 @@
+import glob
+
 import xmltodict
 from deepdiff import DeepDiff
 from colorama import Fore, Style
@@ -5,7 +7,7 @@ from colorama import Fore, Style
 from colorama import just_fix_windows_console
 just_fix_windows_console()
 
-# VARIABLES:
+# CONSTANTS:
 SUBSTRING = '<irs>'
 EXCLUDED_TAGS = [
     "root['irs']['header']['source_technical_reference']",
@@ -21,7 +23,31 @@ initial_message = '''Differences identified between the two files:
 
 # FUNCTIONS:
 
+def find_xml_files():
+    """
+    Find XML files in the current directory and ensure there are exactly two.
+
+    Returns:
+        Tuple[str, str]: Filenames of the two XML files.
+    """
+    files = glob.glob('*.xml')
+    if len(files) != 2:
+        print("Error: Exactly two XML files are required.")
+        exit(1)
+    file1, file2 = files
+    return file1, file2
+
+
 def read_file(file_name):
+    """
+    Read the content of the specified file.
+
+    Args:
+        file_name (str): Name of the file to read.
+
+    Returns:
+        str: Content of the file.
+    """
     try:
         with open(file_name, "r") as file:
             file_str = file.read()
@@ -35,6 +61,16 @@ def read_file(file_name):
 
  
 def split_string_from(input_string, substring):
+    """
+    Split the input string from the specified substring and return the substring onwards.
+
+    Args:
+        input_string (str): Input string to be split.
+        substring (str): Substring to split from.
+
+    Returns:
+        str: Substring onwards.
+    """
     try:
         index_of_substring = input_string.find(substring)
         if index_of_substring != -1:
@@ -67,12 +103,19 @@ Value of {tag} changed from \
 
 
 def message_box(input_str):
-    #Prints like a box for titles output
+    #Print a stylized box around the input string.
     print(len(input_str)*"_")
     print(f"{'\033[4m' + input_str}{Style.RESET_ALL}")
 
 
 def printer(diff_dic, diff_list=None):
+    """
+    Print the identified differences and new items in a readable format.
+
+    Args:
+        diff_dic (dict): Dictionary of differences.
+        diff_list (list): List of differences.
+    """
     print(initial_message)
     for key in diff_dic:
         message_box(key)
@@ -95,7 +138,10 @@ def printer(diff_dic, diff_list=None):
 
 
 
-def main(file1, file2):
+def main():
+
+    file1, file2 = find_xml_files()
+    
     xml_string1 = read_file(file1)
     xml_string2 = read_file(file2)
     
@@ -118,5 +164,5 @@ def main(file1, file2):
 
 
 if __name__ == '__main__':
-    main('old.xml','new.xml')
+    main()
     exit()
