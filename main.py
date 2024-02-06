@@ -1,9 +1,10 @@
 import glob
 import time  # Used only for a more pleasurable experience
+import re
 
 import xmltodict
 from deepdiff import DeepDiff
-from colorama import Fore, Style
+from colorama import Fore, Style, Back
 
 from colorama import just_fix_windows_console
 just_fix_windows_console()
@@ -95,10 +96,10 @@ def split_string_from(input_string, substring):
         exit_error()
 
 
-def create_diff_list(diff_dic):
+def create_diff_list(diff_dic, item_to_pop):
     #This is the only item that is created as list, not dictionary (workaround)
     try:
-        diff_list = diff_dic.pop('dictionary_item_added')
+        diff_list = diff_dic.pop(item_to_pop)
     except:
         diff_list = None
     return diff_list
@@ -106,7 +107,7 @@ def create_diff_list(diff_dic):
 
 def message_generator(tag, old_value="None", new_value="None"):
     message = f'''\
-Value of {tag} changed from \
+Value of {tag} changed from  \
 {Fore.RED + str(old_value)} \
 {Style.RESET_ALL}to \
 {Fore.GREEN + str(new_value)}\
@@ -121,7 +122,8 @@ def message_box(input_str):
     print(f"{'\033[4m' + input_str}{Style.RESET_ALL}")
 
 
-def printer(diff_dic, diff_list=None):
+
+def printer(diff_dic):
     """
     Print the identified differences and new items in a readable format.
 
@@ -138,17 +140,19 @@ def printer(diff_dic, diff_list=None):
                 new_value = diff_dic[key][tag]["new_value"]
                 message = message_generator(tag,old_value,new_value)
                 print(message)
-                time.sleep(0.1)
+                time.sleep(0.01)
             except Exception as e:
                 print(f'ERROR: {tag} - {e}')
         print('\n')
     
+    
+def print_list(diff_list=None,type_list="Chenged"):
     if not diff_list:
-        message_box('No new items found.')
+        message_box(f'No {type_list} found.')
     else:
-        message_box('New Items:')
+        message_box(f'{type_list}:')
         for new_item in diff_list:
-            print(f'New item {new_item}')
+            print(f'{type_list} {new_item}')
 
 
 
@@ -170,14 +174,17 @@ def main(file1, file2):
     diff_dic = DeepDiff(python_dict1, python_dict2,
                         verbose_level=1, exclude_paths=EXCLUDED_TAGS)
     
-    diff_list = create_diff_list(diff_dic)
+    diff_add= create_diff_list(diff_dic, "dictionary_item_added")
+    diff_removed= create_diff_list(diff_dic, "dictionary_item_removed")
     
-    printer(diff_dic, diff_list)
+    printer(diff_dic)
+    print_list(diff_add, "New Itens")
+    print_list(diff_removed, "Itens Removed")
     close = input('Press ENTER to close this window.')
+
 
 if __name__ == '__main__':
     print(initial_message)
     file1, file2 = find_xml_files()
     main(file1,file2)
     exit()
-
