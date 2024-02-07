@@ -1,6 +1,6 @@
 import glob
 import time  # Used only for a more pleasurable experience
-import re
+
 
 import xmltodict
 from deepdiff import DeepDiff
@@ -10,7 +10,7 @@ from colorama import just_fix_windows_console
 just_fix_windows_console()
 
 # CONSTANTS:
-SUBSTRING = '<irs>'
+SUBSTRING = '<'
 EXCLUDED_TAGS = [
     "root['irs']['header']['source_technical_reference']",
     "root['irs']['header']['source_linked_id']",
